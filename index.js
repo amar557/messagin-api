@@ -53,6 +53,13 @@ async function getAccessToken() {
 
 app.get("/", async (req, res) => {
   try {
+    res.send({ token: "hello" });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+app.get("/token", async (req, res) => {
+  try {
     const token = await getAccessToken();
     res.send({ token });
   } catch (error) {
