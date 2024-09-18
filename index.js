@@ -55,7 +55,7 @@ app.get("/", async (req, res) => {
   try {
     res.send({ token: "hello" });
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    res.status(500).send({ err: "hoem page is not loaded" });
   }
 });
 app.get("/token", async (req, res) => {
