@@ -1,29 +1,29 @@
 /** @format */
 
 const { GoogleAuth } = require("google-auth-library");
-const axios = require("axios");
-const fs = require("fs");
-const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const app = express();
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-// const a = require('');
-const keyPath = path.join(
-  __dirname,
-  "./kaaryaar-5d266-firebase-adminsdk-5em5t-1ee20380b5.json"
-);
+require("dotenv").config();
+
 if (!admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.cert(keyPath),
-    databaseURL: "https://kaaryaar-5d266-default-rtdb.firebaseio.com",
+    credential: admin.credential.cert({
+      type: "service_account",
+      project_id: process.env.FIREBASE_PROJECT_ID,
+      private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
+      private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+      client_email: process.env.FIREBASE_CLIENT_EMAIL,
+    }),
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
   });
 }
+
 const PORT = 3001;
 app.use(cors());
 app.use(express.json());
-const key = JSON.parse(fs.readFileSync(keyPath, "utf8"));
 
 // Define scopes for Firebase Cloud Messaging
 const SCOPES = ["https://www.googleapis.com/auth/firebase.messaging"];
@@ -32,7 +32,13 @@ const SCOPES = ["https://www.googleapis.com/auth/firebase.messaging"];
 async function getAccessToken() {
   try {
     const auth = new GoogleAuth({
-      credentials: key,
+      credentials: {
+        type: "service_account",
+        project_id: process.env.FIREBASE_PROJECT_ID,
+        private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
+        private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+        client_email: process.env.FIREBASE_CLIENT_EMAIL,
+      },
       scopes: SCOPES,
     });
 
