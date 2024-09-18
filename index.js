@@ -1,14 +1,14 @@
 /** @format */
 
-const {GoogleAuth} = require('google-auth-library');
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
-const express = require('express');
-const cors = require('cors');
+const { GoogleAuth } = require("google-auth-library");
+const axios = require("axios");
+const fs = require("fs");
+const path = require("path");
+const express = require("express");
+const cors = require("cors");
 const app = express();
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
 // const a = require('');
 admin.initializeApp();
 
@@ -17,12 +17,12 @@ app.use(cors());
 app.use(express.json());
 const keyPath = path.join(
   __dirname,
-  './kaaryaar-5d266-firebase-adminsdk-5em5t-78cdf13182.json',
+  "./kaaryaar-5d266-firebase-adminsdk-5em5t-2e806ef285.json"
 );
-const key = JSON.parse(fs.readFileSync(keyPath, 'utf8'));
+const key = JSON.parse(fs.readFileSync(keyPath, "utf8"));
 
 // Define scopes for Firebase Cloud Messaging
-const SCOPES = ['https://www.googleapis.com/auth/firebase.messaging'];
+const SCOPES = ["https://www.googleapis.com/auth/firebase.messaging"];
 
 // Function to get access token
 async function getAccessToken() {
@@ -36,17 +36,17 @@ async function getAccessToken() {
     const tokenResponse = await client.getAccessToken();
     return tokenResponse.token;
   } catch (error) {
-    console.error('Error getting access token:', error);
-    throw new Error('Failed to get access token');
+    console.error("Error getting access token:", error);
+    throw new Error("Failed to get access token");
   }
 }
 
-app.get('/', async (req, res) => {
+app.get("/", async (req, res) => {
   try {
     const token = await getAccessToken();
-    res.send({token});
+    res.send({ token });
   } catch (error) {
-    res.status(500).send({error: error.message});
+    res.status(500).send({ error: error.message });
   }
 });
 
