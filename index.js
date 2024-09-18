@@ -14,8 +14,12 @@ const keyPath = path.join(
   __dirname,
   "./kaaryaar-5d266-firebase-adminsdk-5em5t-1ee20380b5.json"
 );
-admin.initializeApp();
-
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(keyPath),
+    databaseURL: "https://kaaryaar-5d266-default-rtdb.firebaseio.com",
+  });
+}
 const PORT = 3001;
 app.use(cors());
 app.use(express.json());
