@@ -10,15 +10,18 @@ const app = express();
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 // const a = require('');
-admin.initializeApp();
+const keyPath = path.join(
+  __dirname,
+  "./kaaryaar-5d266-firebase-adminsdk-5em5t-9004f9c3f4.json"
+);
+admin.initializeApp({
+  credential: admin.credential.cert(keyPath),
+  databaseURL: "https://kaaryaar-5d266-default-rtdb.firebaseio.com",
+});
 
 const PORT = 3001;
 app.use(cors());
 app.use(express.json());
-const keyPath = path.join(
-  __dirname,
-  "./kaaryaar-5d266-firebase-adminsdk-5em5t-2e806ef285.json"
-);
 const key = JSON.parse(fs.readFileSync(keyPath, "utf8"));
 
 // Define scopes for Firebase Cloud Messaging
