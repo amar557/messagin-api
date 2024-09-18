@@ -12,12 +12,9 @@ const admin = require("firebase-admin");
 // const a = require('');
 const keyPath = path.join(
   __dirname,
-  "./kaaryaar-5d266-firebase-adminsdk-5em5t-9004f9c3f4.json"
+  "./kaaryaar-5d266-firebase-adminsdk-5em5t-1ee20380b5.json"
 );
-admin.initializeApp({
-  credential: admin.credential.cert(keyPath),
-  databaseURL: "https://kaaryaar-5d266-default-rtdb.firebaseio.com",
-});
+admin.initializeApp();
 
 const PORT = 3001;
 app.use(cors());
