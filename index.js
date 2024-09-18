@@ -53,7 +53,10 @@ async function getAccessToken() {
 
 app.get("/", async (req, res) => {
   try {
-    res.send({ token: "hello" });
+    res.send({
+      token: "hello",
+      key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    });
   } catch (error) {
     res.status(500).send({ err: "hoem page is not loaded" });
   }
